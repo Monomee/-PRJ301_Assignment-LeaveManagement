@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="3.0" xmlns="https://jakarta.ee/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
+    <!-- Define Persistence Unit -->
+    <persistence-unit name="nvh_persistence">
+        <!-- JPA Provider: Hibernate -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!-- Cấu hình kết nối SQL Server -->
+        <properties>
+            <!-- Driver JDBC cho SQL Server -->
+            <property name="jakarta.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+
+            <!-- URL kết nối đến cơ sở dữ liệu SQL Server -->
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:sqlserver://localhost:1433;databaseName=HR_Management_DB;encrypt=true;trustServerCertificate=true"/>
+
+            <!-- Thông tin đăng nhập -->
+            <property name="jakarta.persistence.jdbc.user" value="nvh"/>
+            <property name="jakarta.persistence.jdbc.password" value="12345"/>
+
+            <!-- Hibernate Dialect cho SQL Server -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"/>
+
+            <!-- Tự động tạo schema -->
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+
+            <!-- Hiển thị SQL trong console -->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>
