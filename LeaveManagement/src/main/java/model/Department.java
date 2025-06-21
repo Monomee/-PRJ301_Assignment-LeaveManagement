@@ -4,10 +4,13 @@
  */
 package model;
 
+import jakarta.persistence.Entity;
+
 /**
  *
  * @author PC
  */
+@Entity
 public class Department {
     
 }
