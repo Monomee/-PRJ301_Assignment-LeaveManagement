@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package controller.leaveapplication;
+package controller.home;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,8 +15,8 @@ import java.io.IOException;
  *
  * @author PC
  */
-@WebServlet(name = "LeaveRequestCreate", urlPatterns = "/leave/create")
-public class LeaveRequestCreateServlet extends HttpServlet{
+@WebServlet(name = "Home", urlPatterns = "/home")
+public class HomeController extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
