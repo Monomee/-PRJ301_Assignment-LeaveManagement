@@ -13,21 +13,13 @@ import jakarta.persistence.Persistence;
  * @author PC
  */
 public abstract class DBContext {
-    private static EntityManagerFactory entityManagerFactory;
-    private static final String PERSISTENCE_UNIT_NAME = "nvh_persistance";
-
-    public DBContext() {
-        entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-
-    }
+    private static final EntityManagerFactory entityManagerFactory = 
+        Persistence.createEntityManagerFactory("nvh_persistence");
 
     protected EntityManager getEntityManager() {
-        if (entityManagerFactory == null) {
-            entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-        }
         return entityManagerFactory.createEntityManager();
     }
-    
+
     protected void close() {
         if (entityManagerFactory != null && entityManagerFactory.isOpen()) {
             entityManagerFactory.close();

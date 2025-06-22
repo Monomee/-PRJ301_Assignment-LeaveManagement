@@ -15,8 +15,8 @@ import java.io.IOException;
  *
  * @author PC
  */
-@WebServlet(name = "LeaveRequestCreate", urlPatterns = "/leave/create")
-public class LeaveRequestCreateServlet extends HttpServlet{
+@WebServlet(name = "LeaveRequestUpdate", urlPatterns = "/leave/update")
+public class LeaveRequestUpdateServlet extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
