@@ -44,7 +44,8 @@ public class LoginFilter implements Filter {
         String path = req.getServletPath();
 
         // Allow access to login page without authentication
-        if (path.equals("/login") || path.equals("/home")) {
+        if (path.startsWith("/css/") || path.startsWith("/js/") || path.startsWith("/images/") ||
+            path.equals("/login") || path.equals("/home")) {
             chain.doFilter(request, response);
             return;
         }

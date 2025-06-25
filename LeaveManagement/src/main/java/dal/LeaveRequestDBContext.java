@@ -7,6 +7,7 @@ package dal;
 import jakarta.persistence.EntityManager;
 import java.util.List;
 import model.LeaveRequest;
+import model.User;
 
 /**
  *
@@ -27,7 +28,7 @@ public class LeaveRequestDBContext extends DBContext{
     public List<LeaveRequest> findByUserId(int uid) {
         EntityManager em = getEntityManager();
         try {
-            return em.createQuery("SELECT lr FROM LeaveRequest lr WHERE lr.user.uid = :uid", LeaveRequest.class)
+            return em.createQuery("SELECT lr FROM LeaveRequest lr WHERE lr.user.uid = :uid ORDER BY lr.createdAt DESC", LeaveRequest.class)
                     .setParameter("uid", uid)
                     .getResultList();
         } finally {
@@ -38,9 +39,46 @@ public class LeaveRequestDBContext extends DBContext{
     public List<LeaveRequest> findByManagerId(int managerId) {
         EntityManager em = getEntityManager();
         try {
-            return em.createQuery("SELECT lr FROM LeaveRequest lr WHERE lr.user.manager.uid = :managerId", LeaveRequest.class)
+            return em.createQuery("SELECT lr FROM LeaveRequest lr WHERE lr.user.manager.uid = :managerId AND lr.status = 'inprogress' ORDER BY lr.createdAt DESC", LeaveRequest.class)
                     .setParameter("managerId", managerId)
                     .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public void updateStatus(int lid, String status, User processedBy, String processedReason) {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            LeaveRequest request = em.find(LeaveRequest.class, lid);
+            if (request != null) {
+                request.setStatus(status);
+                request.setProcessedBy(processedBy);
+                request.setProcessedReason(processedReason);
+                em.merge(request);
+            }
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<LeaveRequest> findApprovedForAgenda(int departmentId) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createQuery("SELECT lr FROM LeaveRequest lr WHERE lr.user.department.did = :departmentId AND lr.status = 'approved' ORDER BY lr.fromDate", LeaveRequest.class)
+                    .setParameter("departmentId", departmentId)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public LeaveRequest findById(int lid) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(LeaveRequest.class, lid);
         } finally {
             em.close();
         }
