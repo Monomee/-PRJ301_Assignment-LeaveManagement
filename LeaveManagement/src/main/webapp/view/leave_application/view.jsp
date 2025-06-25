@@ -3,7 +3,6 @@
     Created on : Jun 22, 2025, 10:31:55 PM
     Author     : PC
 --%>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
@@ -15,12 +14,16 @@
         th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
         th { background-color: #f2f2f2; }
         .message { color: green; }
+        .error { color: red; }
     </style>
 </head>
 <body>
 <h1>My Leave Requests</h1>
 <c:if test="${not empty message}">
     <p class="message">${message}</p>
+</c:if>
+<c:if test="${not empty error}">
+    <p class="error">${error}</p>
 </c:if>
 <c:choose>
     <c:when test="${empty leaveRequests}">
@@ -37,6 +40,7 @@
                 <th>Status</th>
                 <th>Processed By</th>
                 <th>Processed Reason</th>
+                <th>Actions</th>
             </tr>
             <c:forEach var="request" items="${leaveRequests}">
                 <tr>
@@ -48,6 +52,12 @@
                     <td>${request.status}</td>
                     <td>${request.processedBy != null ? request.processedBy.fullName : ''}</td>
                     <td>${request.processedReason}</td>
+                    <td>
+                        <c:if test="${request.status == 'inprogress'}">
+                            <a href="${pageContext.request.contextPath}/leave/update?lid=${request.lid}">Edit</a> |
+                            <a href="${pageContext.request.contextPath}/leave/update?lid=${request.lid}&action=delete" onclick="return confirm('Are you sure you want to delete this request?')">Delete</a>
+                        </c:if>
+                    </td>
                 </tr>
             </c:forEach>
         </table>

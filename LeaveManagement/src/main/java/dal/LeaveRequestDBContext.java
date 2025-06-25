@@ -83,4 +83,29 @@ public class LeaveRequestDBContext extends DBContext{
             em.close();
         }
     }
+    
+    public void update(LeaveRequest request) {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(request);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
+
+    public void delete(int lid) {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            LeaveRequest request = em.find(LeaveRequest.class, lid);
+            if (request != null) {
+                em.remove(request);
+            }
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
 }
