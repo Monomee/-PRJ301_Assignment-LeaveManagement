@@ -14,7 +14,7 @@ import model.Role;
  * @author PC
  */
 public class RoleFeatureDBContext extends DBContext{
-    public List<Role> getRolesByUserId(int uid) {
+     public List<Role> getRolesByUserId(int uid) {
         EntityManager em = getEntityManager();
         try {
             return em.createQuery("SELECT ur.role FROM UserRole ur WHERE ur.user.uid = :uid", Role.class)
@@ -46,6 +46,19 @@ public class RoleFeatureDBContext extends DBContext{
                     .setParameter("entryPoint", entryPoint)
                     .getSingleResult();
             return count > 0;
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Feature> getFeaturesByUserId(int uid) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createQuery("SELECT DISTINCT rf.feature FROM RoleFeature rf " +
+                    "JOIN UserRole ur ON rf.role.rid = ur.role.rid " +
+                    "WHERE ur.user.uid = :uid", Feature.class)
+                    .setParameter("uid", uid)
+                    .getResultList();
         } finally {
             em.close();
         }

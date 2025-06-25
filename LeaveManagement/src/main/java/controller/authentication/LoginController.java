@@ -39,13 +39,14 @@ public class LoginController extends HttpServlet{
             resp.sendRedirect("home");
         } else {
             req.setAttribute("error", "Invalid username or password");
-            req.getRequestDispatcher("/view/authentication/login.jsp").forward(req, resp);
+            resp.getWriter().println("login failed");
+            //req.getRequestDispatcher("/view/authentication/login.jsp").forward(req, resp);
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
+        req.getRequestDispatcher("/view/authentication/login.jsp").forward(req, resp);
     }
     
 }
