@@ -6,6 +6,7 @@ package dal;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
+import java.util.ArrayList;
 import model.User;
 
 /**
@@ -32,6 +33,28 @@ public class UserDBContext extends DBContext{
             return em.find(User.class, uid);
         } finally {
             em.close();
+        }
+    }
+    public ArrayList<Integer> getAllSubordinateUids(int managerUid) {
+        EntityManager em = getEntityManager();
+        try {
+            ArrayList<Integer> result = new ArrayList<>();
+            findSubordinatesRecursive(managerUid, result, em);
+            return result;
+        } finally {
+            em.close();
+        }
+    }
+
+    private void findSubordinatesRecursive(int managerUid, ArrayList<Integer> result, EntityManager em) {
+        ArrayList<Integer> subordinates = (ArrayList<Integer>) em.createQuery(
+                "SELECT u.uid FROM User u WHERE u.manager.uid = :managerUid", Integer.class)
+                .setParameter("managerUid", managerUid)
+                .getResultList();
+
+        for (Integer uid : subordinates) {
+            result.add(uid);
+            findSubordinatesRecursive(uid, result, em); // đệ quy
         }
     }
 }

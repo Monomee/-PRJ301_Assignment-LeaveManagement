@@ -5,7 +5,14 @@
 package dal;
 
 import jakarta.persistence.EntityManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.LeaveRequest;
 import model.User;
 
@@ -13,7 +20,8 @@ import model.User;
  *
  * @author PC
  */
-public class LeaveRequestDBContext extends DBContext{
+public class LeaveRequestDBContext extends DBContext {
+
     public void create(LeaveRequest request) {
         EntityManager em = getEntityManager();
         try {
@@ -83,7 +91,7 @@ public class LeaveRequestDBContext extends DBContext{
             em.close();
         }
     }
-    
+
     public void update(LeaveRequest request) {
         EntityManager em = getEntityManager();
         try {
@@ -108,4 +116,21 @@ public class LeaveRequestDBContext extends DBContext{
             em.close();
         }
     }
+
+    public List<LeaveRequest> getLeaveRequestsBySubordinates(int managerUid) {
+        List<Integer> subordinateUids = new UserDBContext().getAllSubordinateUids(managerUid);
+        if (subordinateUids.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        EntityManager em = getEntityManager();
+        try {
+            return em.createQuery("SELECT lr FROM LeaveRequest lr WHERE lr.user.uid IN :uids", LeaveRequest.class)
+                    .setParameter("uids", subordinateUids)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
 }

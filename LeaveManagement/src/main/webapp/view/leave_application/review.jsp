@@ -4,14 +4,94 @@
     Author     : PC
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Review Page</title>
+        <title>Review Leave Requests</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+            }
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+            th, td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+            .message {
+                color: green;
+            }
+            .error {
+                color: red;
+            }
+            .form-group {
+                margin-bottom: 15px;
+            }
+            textarea {
+                width: 300px;
+            }
+        </style>
     </head>
     <body>
-        <h1>Hello World!</h1>
+
+        <h1>Review Leave Requests</h1>
+
+        <c:if test="${not empty message}">
+            <p class="message">${message}</p>
+        </c:if>
+        <c:if test="${not empty error}">
+            <p class="error">${error}</p>
+        </c:if>
+
+        <c:choose>
+            <c:when test="${leaveRequests == null || leaveRequests.isEmpty()}">
+                <p>No leave requests to review.</p>
+            </c:when>
+            <c:otherwise>
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Employee</th>
+                        <th>From Date</th>
+                        <th>To Date</th>
+                        <th>Reason</th>
+                        <th>Actions</th>
+                    </tr>
+                    <c:forEach var="request" items="${leaveRequests}">
+                        <tr>
+                            <td><c:out value="${request.lid}" default="N/A"/></td>
+                            <td><c:out value="${request.title}" default="(No title)"/></td>
+                            <td><c:out value="${request.user.fullName}" default="(No name)"/></td>
+                            <td><c:out value="${request.fromDate}" default="-" /></td>
+                            <td><c:out value="${request.toDate}" default="-" /></td>
+                            <td><c:out value="${request.reason}" default="-" /></td>
+                            <td>
+                                <form method="post" action="${pageContext.request.contextPath}/leave/review" style="display:inline;">
+                                    <input type="hidden" name="lid" value="${request.lid}"/>
+                                    <div class="form-group">
+                                        <label>Reason:</label>
+                                        <textarea name="reason" required></textarea>
+                                    </div>
+                                    <input type="submit" name="action" value="approve" onclick="return confirm('Approve this request?')"/>
+                                    <input type="submit" name="action" value="reject" onclick="return confirm('Reject this request?')"/>
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </c:otherwise>
+        </c:choose>
+
+        <a href="${pageContext.request.contextPath}/home">Back to Home</a>
+
     </body>
 </html>
