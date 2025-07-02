@@ -32,6 +32,18 @@
             .error {
                 color: red;
             }
+            .status-approved {
+                color: green;
+                font-weight: bold;
+            }
+            .status-rejected {
+                color: red;
+                font-weight: bold;
+            }
+            .status-pending {
+                color: orange;
+                font-weight: bold;
+            }
             .form-group {
                 margin-bottom: 15px;
             }
@@ -64,6 +76,7 @@
                         <th>From Date</th>
                         <th>To Date</th>
                         <th>Reason</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                     <c:forEach var="request" items="${leaveRequests}">
@@ -75,15 +88,38 @@
                             <td><c:out value="${request.toDate}" default="-" /></td>
                             <td><c:out value="${request.reason}" default="-" /></td>
                             <td>
-                                <form method="post" action="${pageContext.request.contextPath}/leave/review" style="display:inline;">
-                                    <input type="hidden" name="lid" value="${request.lid}"/>
-                                    <div class="form-group">
-                                        <label>Reason:</label>
-                                        <textarea name="reason" required></textarea>
-                                    </div>
-                                    <input type="submit" name="action" value="approve" onclick="return confirm('Approve this request?')"/>
-                                    <input type="submit" name="action" value="reject" onclick="return confirm('Reject this request?')"/>
-                                </form>
+                                <c:choose>
+                                    <c:when test="${request.status == 'approved'}">
+                                        <span class="status-approved">Approved</span>
+                                    </c:when>
+                                    <c:when test="${request.status == 'rejected'}">
+                                        <span class="status-rejected">Rejected</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="status-pending">Inprocess</span>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${request.status == 'approved'}">
+                                        <span style="color: green; font-weight: bold;">Approved</span>
+                                    </c:when>
+                                    <c:when test="${request.status == 'rejected'}">
+                                        <span style="color: red; font-weight: bold;">Rejected</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <form method="post" action="${pageContext.request.contextPath}/leave/review" style="display:inline;">
+                                            <input type="hidden" name="lid" value="${request.lid}"/>
+                                            <div class="form-group">
+                                                <label>Reason:</label>
+                                                <textarea name="reason" ></textarea>
+                                            </div>
+                                            <input type="submit" name="action" value="approve" onclick="return confirm('Approve this request?')"/>
+                                            <input type="submit" name="action" value="reject" onclick="return confirm('Reject this request?')"/>
+                                        </form>
+                                    </c:otherwise>
+                                </c:choose>
                             </td>
                         </tr>
                     </c:forEach>

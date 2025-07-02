@@ -48,7 +48,7 @@ public class LeaveRequestReviewServlet extends HttpServlet {
             User manager = request.getUser().getManager();
             if (manager == null || request == null
                     || !request.getStatus().equals("inprogress")
-                    || manager.getUid() != user.getUid()) {
+                    || manager.getUid() == user.getUid()) {
                 session.setAttribute("error", "Cannot process this request.");
                 resp.sendRedirect(req.getContextPath() + "/leave/review");
                 return;

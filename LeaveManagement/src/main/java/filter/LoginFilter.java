@@ -4,14 +4,11 @@
  */
 package filter;
 
-import dal.RoleFeatureDBContext;
 import java.io.IOException;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+
+import dal.RoleFeatureDBContext;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
@@ -27,7 +24,7 @@ import model.User;
  */
 @WebFilter(urlPatterns = "/*")
 public class LoginFilter implements Filter {
-    
+
     private RoleFeatureDBContext roleFeatureDB;
 
     @Override
@@ -44,8 +41,8 @@ public class LoginFilter implements Filter {
         String path = req.getServletPath();
 
         // Allow access to login page without authentication
-        if (path.startsWith("/css/") || path.startsWith("/js/") || path.startsWith("/images/") ||
-            path.equals("/login") || path.equals("/home")) {
+        if (path.startsWith("/css/") || path.startsWith("/js/") || path.startsWith("/images/")
+                || path.equals("/login") || path.equals("/home")) {
             chain.doFilter(request, response);
             return;
         }
@@ -53,6 +50,12 @@ public class LoginFilter implements Filter {
         // Check if user is logged in
         if (session == null || session.getAttribute("user") == null) {
             res.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
+
+        // Check if path does not exist 
+        if (req.getServletContext().getResource(path) == null) {
+            res.sendError(HttpServletResponse.SC_NOT_FOUND, "Resource Not Found");
             return;
         }
 

@@ -14,30 +14,24 @@
     </head>
     <body>
         <h1>Welcome, ${sessionScope.user.fullName}</h1>
-    <h2>Your Roles</h2>
-    <table>
-        <tr>
-            <th>Role Name</th>
-        </tr>
-        <c:forEach var="role" items="${roles}">
-            <tr>
-                <td>${role.roleName}</td>
-            </tr>
-        </c:forEach>
-    </table>
-    <h2>Your Features</h2>
-    <table>
-        <tr>
-            <th>Feature Name</th>
-            <th>Entry Point</th>
-        </tr>
-        <c:forEach var="feature" items="${features}">
-            <tr>
-                <td>${feature.featureName}</td>
-                <td><a href="${pageContext.request.contextPath}${feature.entryPoint}">Click here</a></td>            
-            </tr>
-        </c:forEach>
-    </table>
-    
+        <h2>Your Roles</h2>
+        <table>
+            <c:forEach var="role" items="${roles}">
+                <tr>
+                    <td>${role.roleName}</td>
+                </tr>
+            </c:forEach>
+        </table>
+        <h2>Your Features</h2>
+        <table>
+            <c:forEach var="feature" items="${features}">
+                <tr>
+                    <c:if test="${feature.entryPoint != '/leave/update'}">
+                        <td><a href="${pageContext.request.contextPath}${feature.entryPoint}">${feature.featureName}</a></td>
+                        </c:if>
+                </tr>
+            </c:forEach>
+        </table>
+
     </body>
 </html>
