@@ -52,13 +52,12 @@ public class LoginFilter implements Filter {
             res.sendRedirect(req.getContextPath() + "/login");
             return;
         }
-
-        // Check if path does not exist 
-        if (req.getServletContext().getResource(path) == null) {
-            res.sendError(HttpServletResponse.SC_NOT_FOUND, "Resource Not Found");
+        
+        if (!roleFeatureDB.isPathExists(path)) {
+            res.sendError(HttpServletResponse.SC_NOT_FOUND, "Path Not Found");
             return;
         }
-
+        
         // Check access permission
         User user = (User) session.getAttribute("user");
         if (!roleFeatureDB.hasAccess(user.getUid(), path)) {
