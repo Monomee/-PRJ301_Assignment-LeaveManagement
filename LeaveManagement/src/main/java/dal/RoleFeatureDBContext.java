@@ -4,8 +4,10 @@
  */
 package dal;
 
-import jakarta.persistence.EntityManager;
 import java.util.List;
+
+import jakarta.persistence.EntityManager;
+import java.util.ArrayList;
 import model.Feature;
 import model.Role;
 
@@ -58,6 +60,37 @@ public class RoleFeatureDBContext extends DBContext{
                     "JOIN UserRole ur ON rf.role.rid = ur.role.rid " +
                     "WHERE ur.user.uid = :uid", Feature.class)
                     .setParameter("uid", uid)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    /**
+     * Kiểm tra xem path có tồn tại trong database không
+     * @param path đường dẫn cần kiểm tra
+     * @return true nếu path tồn tại, false nếu không
+     */
+    public boolean isPathExists(String path) {
+        EntityManager em = getEntityManager();
+        try {
+            Long count = em.createQuery("SELECT COUNT(f) FROM Feature f WHERE f.entryPoint = :path", Long.class)
+                    .setParameter("path", path)
+                    .getSingleResult();
+            return count > 0;
+        } finally {
+            em.close();
+        }
+    }
+
+    /**
+     * Lấy tất cả các entry point từ database
+     * @return danh sách các entry point
+     */
+    public ArrayList<String> getAllEntryPoints() {
+        EntityManager em = getEntityManager();
+        try {
+            return (ArrayList<String>) em.createQuery("SELECT f.entryPoint FROM Feature f", String.class)
                     .getResultList();
         } finally {
             em.close();
