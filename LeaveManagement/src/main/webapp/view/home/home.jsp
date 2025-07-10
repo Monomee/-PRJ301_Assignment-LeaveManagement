@@ -13,7 +13,10 @@
         <title>Home Page</title>
     </head>
     <body>
-        <h1>Welcome, ${sessionScope.user.fullName}</h1>
+        <div style="display: flex; justify-content: space-between">
+            <h1>Welcome, ${sessionScope.user.fullName}</h1>
+            <a href="/logout">Logout</a>
+        </div>      
         <h2>Your Roles</h2>
         <table>
             <c:forEach var="role" items="${roles}">

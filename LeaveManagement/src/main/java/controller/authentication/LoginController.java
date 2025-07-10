@@ -18,7 +18,7 @@ import model.User;
  *
  * @author PC
  */
-@WebServlet("/login")
+@WebServlet(name = "Login", urlPatterns = "/login")
 public class LoginController extends HttpServlet{
     private UserDBContext userDB;
 
