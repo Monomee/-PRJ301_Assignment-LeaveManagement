@@ -4,119 +4,47 @@
     <head>
         <title>Leave Agenda</title>
         <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/leave.css">
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 20px;
-            }
-            #calendar {
-                max-width: 900px;
-                margin: 0 auto;
-                display: none;
-            }
-            #staff-view {
-                max-width: 900px;
-                margin: 0 auto;
-                display: none;
-            }
-            table {
-                border-collapse: collapse;
-                width: 100%;
-            }
-            th, td {
-                border: 1px solid #ddd;
-                padding: 8px;
-                text-align: center;
-            }
-            th {
-                background-color: #f2f2f2;
-            }
-            .working {
-                background-color: green;
-                color: white;
-            }
-            .absent {
-                background-color: red;
-                color: white;
-            }
-            .future {
-                background-color: grey;
-                color: white;
-            }
-            .fc-event-approved {
-                background-color: green;
-                border-color: green;
-            }
-            .fc-event-rejected {
-                background-color: red;
-                border-color: red;
-            }
-            .view-toggle {
-                margin-bottom: 10px;
-            }
-            .view-toggle button {
-                padding: 10px;
-                margin-right: 10px;
-            }
-            .view-toggle button:disabled {
-                background-color: #ccc;
-            }
-            .week-nav {
-                margin-bottom: 10px;
-            }
-            .week-nav button {
-                padding: 8px;
-                margin-right: 5px;
-            }
-            .filter-container {
-                margin-bottom: 10px;
-            }
-            .filter-container input {
-                padding: 8px;
-                width: 200px;
-            }
-            .hidden {
-                display: none;
-            }
-        </style>
     </head>
     <body>
-        <h1>Leave Agenda</h1>
-        <div class="view-toggle">
-            <button id="calendar-btn" onclick="switchView('calendar')">Calendar View</button>
-            <button id="staff-btn" onclick="switchView('staff')">Staff View</button>
-        </div>
-        <div class="filter-container">
-            <label for="employeeFilter">Filter by Employee Name: </label>
-            <input type="text" id="employeeFilter" onkeyup="applyFilter()" placeholder="Enter employee name">
-        </div>
-        <div style="margin-bottom: 10px;">
-            <span class="note-staff-view" style="color: green;">■ Working   </span>
-            <span class="note-cal-view" style="color: green;">■ Approved   </span>
-            <span class="note-staff-view" style="color: red;">■ Absent   </span>
-            <span class="note-cal-view" style="color: red;">■ Rejected</span>
-            <span class="note-staff-view" style="color: grey;">■ Future</span>
-        </div>
-        <div id="calendar">
-            <div class="calendar-nav" style="margin-bottom: 10px;">
-                <label for="monthPicker">Select Month: </label>
-                <input type="month" id="monthPicker" onchange="updateCalendarMonth()">
+        <div class="leave-table-container">
+            <h1>Leave Agenda</h1>
+            <div class="view-toggle" style="margin-bottom: 10px;">
+                <button id="calendar-btn" onclick="switchView('calendar')">Calendar View</button>
+                <button id="staff-btn" onclick="switchView('staff')">Staff View</button>
             </div>
-        </div>
-        <div id="staff-view">
-            <div class="week-nav" style="display: none;">
-                <button onclick="changeWeek(-1)">Previous Week</button>
-                <button onclick="changeWeek(1)">Next Week</button>
-                <button onclick="goToToday()">Today</button>
-                <label for="weekPicker">Select Week: </label>
-                <input type="date" id="weekPicker" onchange="setWeekFromDate()">
-                <span id="week-range"></span>
+            <div class="filter-container">
+                <label for="employeeFilter">Filter by Employee Name: </label>
+                <input type="text" id="employeeFilter" onkeyup="applyFilter()" placeholder="Enter employee name">
             </div>
-            <div id="staff-table"></div>
+            <div style="margin-bottom: 10px;">
+                <span class="note-staff-view" style="color: green;">■ Working   </span>
+                <span class="note-cal-view" style="color: green;">■ Approved   </span>
+                <span class="note-staff-view" style="color: red;">■ Absent   </span>
+                <span class="note-cal-view" style="color: red;">■ Rejected</span>
+                <span class="note-staff-view" style="color: grey;">■ Future</span>
+            </div>
+            <div id="calendar" style="display: none;">
+                <div class="calendar-nav" style="margin-bottom: 10px;">
+                    <label for="monthPicker">Select Month: </label>
+                    <input type="month" id="monthPicker" onchange="updateCalendarMonth()">
+                </div>
+            </div>
+            <div id="staff-view" style="display: none;">
+                <div class="week-nav" style="display: none;">
+                    <button onclick="changeWeek(-1)">Previous Week</button>
+                    <button onclick="changeWeek(1)">Next Week</button>
+                    <button onclick="goToToday()">Today</button>
+                    <label for="weekPicker">Select Week: </label>
+                    <input type="date" id="weekPicker" onchange="setWeekFromDate()">
+                    <span id="week-range"></span>
+                </div>
+                <div id="staff-table"></div>
+            </div>
+            <a href="${pageContext.request.contextPath}/home">Back to Home</a>
         </div>
-        <a href="${pageContext.request.contextPath}/home">Back to Home</a>
-
+        <script src="${pageContext.request.contextPath}/js/leave.js"></script>
         <script>
             let currentWeekStart = new Date();
             let employeeFilter = '';
