@@ -8,6 +8,7 @@ import jakarta.persistence.EntityManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -72,17 +73,61 @@ public class LeaveRequestDBContext extends DBContext {
         }
     }
 
-    public List<LeaveRequest> findApprovedForAgenda(int departmentId) {
+    public List<LeaveRequest> findForAgenda(int departmentId, LocalDate startDate, LocalDate endDate) {
         EntityManager em = getEntityManager();
         try {
-            return em.createQuery("SELECT lr FROM LeaveRequest lr WHERE lr.user.department.did = :departmentId AND lr.status = 'approved' ORDER BY lr.fromDate", LeaveRequest.class)
+            return em.createQuery("SELECT lr FROM LeaveRequest lr WHERE lr.user.department.did = :departmentId AND lr.status IN ('approved', 'rejected') AND lr.fromDate <= :endDate AND lr.toDate >= :startDate ORDER BY lr.fromDate", LeaveRequest.class)
+                    .setParameter("departmentId", departmentId)
+                    .setParameter("startDate", startDate)
+                    .setParameter("endDate", endDate)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public List<LeaveRequest> findForAgenda(int departmentId) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createQuery("SELECT lr FROM LeaveRequest lr WHERE lr.user.department.did = :departmentId AND lr.status IN ('approved', 'rejected') ORDER BY lr.fromDate", LeaveRequest.class)
                     .setParameter("departmentId", departmentId)
                     .getResultList();
         } finally {
             em.close();
         }
     }
+    
+    public List<LeaveRequest> findForAgendaWithEmployeeFilter(int departmentId, LocalDate startDate, LocalDate endDate, String employeeFilter) {
+        EntityManager em = getEntityManager();
+        try {
+            String query = "SELECT lr FROM LeaveRequest lr WHERE lr.user.department.did = :departmentId AND lr.status IN ('approved', 'rejected') AND lr.fromDate <= :endDate AND lr.toDate >= :startDate";
+            if (employeeFilter != null && !employeeFilter.trim().isEmpty()) {
+                query += " AND lr.user.fullName LIKE :employeeFilter";
+            }
+            query += " ORDER BY lr.fromDate";
+            var emQuery = em.createQuery(query, LeaveRequest.class)
+                           .setParameter("departmentId", departmentId)
+                           .setParameter("startDate", startDate)
+                           .setParameter("endDate", endDate);
+            if (employeeFilter != null && !employeeFilter.trim().isEmpty()) {
+                emQuery.setParameter("employeeFilter", "%" + employeeFilter + "%");
+            }
+            return emQuery.getResultList();
+        } finally {
+            em.close();
+        }
+    }
 
+    public List<User> findUsersByDepartment(int departmentId) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createQuery("SELECT u FROM User u WHERE u.department.did = :departmentId ORDER BY u.fullName", User.class)
+                    .setParameter("departmentId", departmentId)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
     public LeaveRequest findById(int lid) {
         EntityManager em = getEntityManager();
         try {

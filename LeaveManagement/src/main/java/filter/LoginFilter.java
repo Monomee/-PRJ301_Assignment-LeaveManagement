@@ -42,7 +42,7 @@ public class LoginFilter implements Filter {
 
         // Allow access to login page without authentication
         if (path.startsWith("/css/") || path.startsWith("/js/") || path.startsWith("/images/")
-                || path.equals("/login") || path.equals("/home")) {
+                || path.equals("/login") || path.equals("/home") || path.equals("/logout")) {
             chain.doFilter(request, response);
             return;
         }
