@@ -6,10 +6,11 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ include file="/view/navbar.jsp" %>
 <html>
     <head>
         <title>Review Leave Requests</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/leave.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/feature.css">
     </head>
     <body>
         <div class="leave-table-container">
@@ -83,8 +84,9 @@
                     </table>
                 </c:otherwise>
             </c:choose>
-            <a href="${pageContext.request.contextPath}/home">Back to Home</a>
+            <a href="${pageContext.request.contextPath}/tools/leave">Back to Leave Management</a>
         </div>
         <script src="${pageContext.request.contextPath}/js/leave.js"></script>
+        <script src="${pageContext.request.contextPath}/js/feature.js"></script>
     </body>
 </html>

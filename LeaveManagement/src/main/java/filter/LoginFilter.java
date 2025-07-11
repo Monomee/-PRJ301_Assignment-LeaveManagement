@@ -40,9 +40,11 @@ public class LoginFilter implements Filter {
         HttpSession session = req.getSession(false);
         String path = req.getServletPath();
 
-        // Allow access to login page without authentication
+        // Allow access to truly public pages without authentication
         if (path.startsWith("/css/") || path.startsWith("/js/") || path.startsWith("/images/")
-                || path.equals("/login") || path.equals("/home") || path.equals("/logout")) {
+                || path.equals("/login") || path.equals("/logout")
+                || path.equals("/news") || path.equals("/contact")
+                || path.equals("/home") || path.equals("/tools/leave")) {
             chain.doFilter(request, response);
             return;
         }

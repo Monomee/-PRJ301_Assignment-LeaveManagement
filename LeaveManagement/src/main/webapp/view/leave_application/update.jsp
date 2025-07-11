@@ -6,10 +6,11 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ include file="/view/navbar.jsp" %>
 <html>
 <head>
     <title>Update Leave Request</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/leave.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/feature.css">
 </head>
 <body>
 <div class="leave-container">
@@ -42,5 +43,6 @@
     <a href="${pageContext.request.contextPath}/leave/view">Back to My Leave Requests</a>
 </div>
 <script src="${pageContext.request.contextPath}/js/leave.js"></script>
+<script src="${pageContext.request.contextPath}/js/feature.js"></script>
 </body>
 </html>
