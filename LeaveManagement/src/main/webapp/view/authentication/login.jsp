@@ -24,7 +24,7 @@
             <div class="modal-container">
                 <div class="modal-left">
                     <h1 class="modal-title">Welcome!</h1>
-                    <p class="modal-desc">Leave Management.</p>
+                    <p class="modal-desc">HR Management.</p>
                     <form action="login" method="POST">
                         <div class="input-block">
                             <label for="username" class="input-label">User</label>
@@ -34,6 +34,10 @@
                             <label for="password" class="input-label">Password</label>
                             <input type="password" name="password" id="password" placeholder="Password" required>
                         </div>
+                        <c:if test="${not empty sessionScope.error}">
+                            <div class="error-message" style="color:red; margin-bottom:10px;">${sessionScope.error}</div>
+                            <c:remove var="error" scope="session"/>
+                        </c:if>
                         <div class="modal-buttons">
                             <a href="#" class="">Forgot your password?</a>
                             <button type="submit" class="input-button">Login</button>
@@ -53,4 +57,11 @@
             <button class="modal-button">Click here to login</button>
         </div>
     </body>
+    <% if (session.getAttribute("error") != null) { %>
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            if (typeof openModal === 'function') openModal();
+        });
+    </script>
+    <% } %>
 </html>

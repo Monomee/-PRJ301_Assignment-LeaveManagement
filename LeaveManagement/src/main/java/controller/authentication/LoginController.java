@@ -4,6 +4,8 @@
  */
 package controller.authentication;
 
+import java.io.IOException;
+
 import dal.UserDBContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,7 +13,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.io.IOException;
 import model.User;
 
 /**
@@ -36,11 +37,12 @@ public class LoginController extends HttpServlet{
         if (user != null && user.getPassword().equals(password)) { // Trong thực tế, dùng bcrypt để kiểm tra mật khẩu
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
+            session.setAttribute("error", null);
             resp.sendRedirect("home");
         } else {
-            req.setAttribute("error", "Invalid username or password");
-            //resp.getWriter().println("login failed");
-            //req.getRequestDispatcher("/view/authentication/login.jsp").forward(req, resp);
+            HttpSession session = req.getSession();
+            session.setAttribute("error", "Invalid username or password");
+            resp.sendRedirect("login");
         }
     }
 
