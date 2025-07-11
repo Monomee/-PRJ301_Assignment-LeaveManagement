@@ -5,44 +5,55 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ include file="/view/navbar.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Home Page</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css">
+        <title>Dashboard - HR Management</title>
+        <link rel="stylesheet" href="/css/home.css">
     </head>
     <body>
-        <nav class="navbar">
-            <div class="navbar-left">
-                <span class="logo">Leave Management</span>
-            </div>
-            <div class="navbar-right">
-                <span class="welcome">Welcome, ${sessionScope.user.fullName}</span>
-                <a class="logout-btn" href="/logout">Logout</a>
-            </div>
-        </nav>
         <main class="dashboard">
-            <section class="card roles-card">
-                <h2>Your Roles</h2>
-                <ul class="roles-list">
-                    <c:forEach var="role" items="${roles}">
-                        <li>${role.roleName}</li>
-                    </c:forEach>
-                </ul>
+            <section class="welcome-section card">
+                <h1>Welcome, ${sessionScope.user.fullName}!</h1>
+                <p>Glad to see you at the Leave Management System. Here you can manage your leave requests, stay updated with company news, and connect with colleagues.</p>
             </section>
-            <section class="card features-card">
-                <h2>Your Features</h2>
-                <ul class="features-list">
-                    <c:forEach var="feature" items="${features}">
-                        <c:if test="${feature.entryPoint != '/leave/update'}">
-                            <li><a href="${pageContext.request.contextPath}${feature.entryPoint}">${feature.featureName}</a></li>
-                        </c:if>
-                    </c:forEach>
+            <section class="quick-links">
+                <div class="quick-link card">
+                    <a href="/tools/leave">
+                        <span class="icon">📝</span>
+                        <span>Apply for Leave</span>
+                    </a>
+                </div>
+                <div class="quick-link card">
+                    <a href="/news">
+                        <span class="icon">📰</span>
+                        <span>Company News</span>
+                    </a>
+                </div>
+                <div class="quick-link card">
+                    <a href="/contact">
+                        <span class="icon">📇</span>
+                        <span>Contact Directory</span>
+                    </a>
+                </div>
+                <div class="quick-link card">
+                    <a href="/tools/leave">
+                        <span class="icon">🛠️</span>
+                        <span>Leave Tools</span>
+                    </a>
+                </div>
+            </section>
+            <section class="announcements card">
+                <h2>Announcements</h2>
+                <ul>
+                    <li><strong>2025-06-23:</strong> Hệ thống nghỉ phép đã cập nhật giao diện mới!</li>
+                    <li><strong>2025-06-20:</strong> Đừng quên kiểm tra lịch nghỉ lễ sắp tới.</li>
+                    <li><strong>2025-06-15:</strong> Chào mừng các thành viên mới gia nhập công ty!</li>
                 </ul>
             </section>
         </main>
-        <script src="${pageContext.request.contextPath}/js/home.js"></script>
+        <script src="/js/home.js"></script>
     </body>
 </html>

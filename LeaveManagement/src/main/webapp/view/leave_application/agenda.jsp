@@ -1,10 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ include file="/view/navbar.jsp" %>
 <html>
     <head>
         <title>Leave Agenda</title>
         <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/leave.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/feature.css">
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
         <style>
             .hidden {
@@ -84,16 +85,17 @@
                 <div class="week-nav" style="display: none;">
                     <button onclick="changeWeek(-1)">Previous Week</button>
                     <button onclick="changeWeek(1)">Next Week</button>
-                    <button onclick="goToToday()">Today</button>
+                    <button onclick="goToToday()">Today</button> <br>
                     <label for="weekPicker">Select Week: </label>
                     <input type="date" id="weekPicker" onchange="setWeekFromDate()">
                     <span id="week-range"></span>
                 </div>
                 <div id="staff-table"></div>
             </div>
-            <a href="${pageContext.request.contextPath}/home">Back to Home</a>
+            <a href="${pageContext.request.contextPath}/tools/leave">Back to Leave Management</a>
         </div>
         <script src="${pageContext.request.contextPath}/js/leave.js"></script>
+        <script src="${pageContext.request.contextPath}/js/feature.js"></script>
         <script>
                         let currentWeekStart = new Date();
                         let employeeFilter = '';

@@ -1,0 +1,146 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jul 11, 2025, 4:41:25 PM
+    Author     : PC
+*/
+
+/* Feature styles for leave pages - modern, card-style, blue-purple theme */
+body {
+  background: #f6f8fc;
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+.card, .leave-container, .leave-table-container {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(78,84,200,0.10), 0 1.5px 6px rgba(143,148,251,0.08);
+  padding: 2rem 2.5rem;
+  margin: 2rem auto;
+  max-width: 700px;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.card:hover, .leave-container:hover, .leave-table-container:hover {
+  box-shadow: 0 8px 32px rgba(78,84,200,0.18), 0 2px 8px rgba(143,148,251,0.12);
+  transform: translateY(-2px) scale(1.01);
+}
+
+h1, h2, h3 {
+  color: #4e54c8;
+  margin-bottom: 1.2rem;
+  letter-spacing: 1px;
+}
+
+/* Table styles - đơn giản, dễ nhìn */
+.leave-table, .contact-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  background: #f7f8fa;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+}
+.leave-table th, .contact-table th {
+  background: #e3e8f7;
+  color: #34495e;
+  font-weight: 600;
+  border-bottom: 1.5px solid #d0d6e2;
+  padding: 0.7rem 1rem;
+}
+.leave-table td, .contact-table td {
+  padding: 0.7rem 1rem;
+  color: #222;
+  border-bottom: 1px solid #f0f0f0;
+}
+.leave-table tr:nth-child(even), .contact-table tr:nth-child(even) {
+  background: #f0f3fa;
+}
+.leave-table tr:hover, .contact-table tr:hover {
+  background: #e6e9f7;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+}
+.form-group label {
+  display: block;
+  color: #4e54c8;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group textarea {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border: 1.5px solid #8f94fb;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #f7f8fa;
+  transition: border 0.2s;
+}
+.form-group input:focus, .form-group textarea:focus {
+  border: 2px solid #4e54c8;
+  outline: none;
+}
+/* Nút bấm đơn giản, dễ nhìn */
+input[type="submit"], button, .leave-table a, .contact-table a {
+  background: #e3e8f7;
+  color: #34495e;
+  border: 1px solid #bfc9d1;
+  border-radius: 6px;
+  padding: 0.5rem 1.3rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  margin-bottom: 0.2rem;
+  box-shadow: none;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+input[type="submit"]:hover, button:hover, .leave-table a:hover, .contact-table a:hover {
+  background: #d0d6e2;
+  color: #222;
+  border: 1.5px solid #8f94fb;
+}
+
+.message {
+  color: #27ae60;
+  background: #eafaf1;
+  border-left: 4px solid #27ae60;
+  padding: 0.7rem 1.2rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+.error {
+  color: #e74c3c;
+  background: #fdeaea;
+  border-left: 4px solid #e74c3c;
+  padding: 0.7rem 1.2rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.status-approved { color: #27ae60; font-weight: bold; }
+.status-rejected { color: #e74c3c; font-weight: bold; }
+.status-pending, .status-inprogress { color: #f39c12; font-weight: bold; }
+
+.leave-table-container {
+  max-width: 1100px;
+}
+
+@media (max-width: 900px) {
+  .card, .leave-container, .leave-table-container {
+    padding: 1.2rem 0.7rem;
+    max-width: 98vw;
+  }
+  .leave-table, .contact-table {
+    font-size: 0.97rem;
+  }
+}
+

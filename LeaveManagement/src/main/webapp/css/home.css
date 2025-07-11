@@ -1,113 +1,117 @@
 /* Home Page Styles */
 body {
-    margin: 0;
-    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
-    background: linear-gradient(120deg, #f8fafc 0%, #e0e7ef 100%);
-    min-height: 100vh;
+  background: #f6f8fc;
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
 }
-
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #2d3e50;
-    color: #fff;
-    padding: 1rem 2rem;
-    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
-}
-
-.logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    letter-spacing: 1px;
-}
-
-.welcome {
-    margin-right: 1.5rem;
-    font-size: 1.1rem;
-}
-
-.logout-btn {
-    background: #e74c3c;
-    color: #fff;
-    padding: 0.5rem 1.2rem;
-    border: none;
-    border-radius: 4px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: background 0.2s;
-}
-.logout-btn:hover {
-    background: #c0392b;
-}
-
 .dashboard {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2rem;
-    margin: 3rem auto 0 auto;
-    max-width: 900px;
+  max-width: 1100px;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 0 1rem;
 }
-
 .card {
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 4px 24px rgba(44, 62, 80, 0.10);
-    padding: 2rem 2.5rem;
-    min-width: 320px;
-    flex: 1 1 350px;
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 24px rgba(80, 112, 255, 0.07);
+  padding: 2rem 2.5rem;
+  margin-bottom: 0;
+  transition: box-shadow 0.2s, transform 0.2s;
 }
-
-.card h2 {
-    margin-top: 0;
-    margin-bottom: 1.2rem;
-    font-size: 1.3rem;
-    color: #2d3e50;
-    letter-spacing: 0.5px;
+.card:hover {
+  box-shadow: 0 8px 32px rgba(80, 112, 255, 0.13);
+  transform: translateY(-2px) scale(1.01);
 }
-
-.roles-list, .features-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    width: 100%;
+.welcome-section {
+  text-align: center;
+  background: linear-gradient(90deg, #8f94fb 0%, #4e54c8 100%);
+  color: #fff;
+  margin-bottom: 0;
 }
-
-.roles-list li, .features-list li {
-    background: #f3f6fa;
-    margin-bottom: 0.7rem;
-    padding: 0.7rem 1rem;
-    border-radius: 8px;
-    font-size: 1.05rem;
-    color: #34495e;
-    transition: background 0.2s;
-    box-shadow: 0 1px 4px rgba(44, 62, 80, 0.04);
+.welcome-section h1 {
+  margin-top: 0;
+  font-size: 2.2rem;
+  font-weight: 700;
 }
-
-.features-list li a {
-    color: #2980b9;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s;
+.quick-links {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
-.features-list li a:hover {
-    color: #1abc9c;
-    text-decoration: underline;
+.quick-link {
+  flex: 1 1 180px;
+  min-width: 180px;
+  max-width: 220px;
+  text-align: center;
+  padding: 1.2rem 0.5rem;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.2s, background 0.2s;
+  background: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
 }
-
+.quick-link a {
+  text-decoration: none;
+  color: #333;
+  font-size: 1.1rem;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.quick-link .icon {
+  font-size: 2.2rem;
+  margin-bottom: 0.2rem;
+  transition: transform 0.2s;
+}
+.quick-link:hover {
+  background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+  box-shadow: 0 8px 32px rgba(80, 112, 255, 0.13);
+  transform: translateY(-3px) scale(1.03);
+}
+.quick-link:hover .icon {
+  transform: scale(1.15) rotate(-8deg);
+}
+.announcements {
+  background: #fffbe7;
+  color: #5a4e2c;
+}
+.announcements h2 {
+  margin-top: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+.announcements ul {
+  padding-left: 1.2rem;
+  margin: 0.5rem 0 0 0;
+}
+.announcements li {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
 @media (max-width: 900px) {
-    .dashboard {
-        flex-direction: column;
-        align-items: center;
-        gap: 1.5rem;
-    }
-    .card {
-        max-width: 95vw;
-        min-width: unset;
-    }
+  .dashboard {
+    padding: 0 0.2rem;
+  }
+  .quick-links {
+    gap: 1rem;
+  }
+  .card {
+    padding: 1.2rem 0.7rem;
+  }
+}
+@media (max-width: 600px) {
+  .dashboard {
+    gap: 1rem;
+  }
+  .quick-links {
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .quick-link {
+    max-width: 100%;
+    min-width: 120px;
+  }
 } 

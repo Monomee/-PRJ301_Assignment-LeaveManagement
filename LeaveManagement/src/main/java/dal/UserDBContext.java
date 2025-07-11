@@ -7,7 +7,9 @@ package dal;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import java.util.ArrayList;
+import java.util.List;
 import model.User;
+import model.UserDTO;
 
 /**
  *
@@ -55,6 +57,31 @@ public class UserDBContext extends DBContext{
         for (Integer uid : subordinates) {
             result.add(uid);
             findSubordinatesRecursive(uid, result, em); // đệ quy
+        }
+    }
+
+    public List<UserDTO> getAllUsersWithRoleAndDepartment() {
+        EntityManager em = getEntityManager();
+        try {
+            List<Object[]> results = em.createQuery(
+                "SELECT u.fullName, u.email, r.roleName, d.departmentName " +
+                "FROM User u " +
+                "JOIN UserRole ur ON ur.user.uid = u.uid " +
+                "JOIN Role r ON ur.role.rid = r.rid " +
+                "JOIN Department d ON u.department.did = d.did"
+            ).getResultList();
+            List<UserDTO> users = new ArrayList<>();
+            for (Object[] row : results) {
+                UserDTO dto = new UserDTO();
+                dto.setFullName((String) row[0]);
+                dto.setEmail((String) row[1]);
+                dto.setRoleName((String) row[2]);
+                dto.setDepartmentName((String) row[3]);
+                users.add(dto);
+            }
+            return users;
+        } finally {
+            em.close();
         }
     }
 }
