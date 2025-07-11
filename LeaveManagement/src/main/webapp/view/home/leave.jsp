@@ -5,7 +5,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Home Page</title>
+        <title>Tools</title>
         <link rel="stylesheet" href="/css/leave.css">
     </head>
     <body>

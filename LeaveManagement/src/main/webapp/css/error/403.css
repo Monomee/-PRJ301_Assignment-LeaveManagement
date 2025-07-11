@@ -72,7 +72,37 @@ svg {
   bottom: 0;
 }
 
+.error-button {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 1.2rem;
+  padding: 1rem 2.5rem;
+  margin: 1rem 0.5rem 0 0.5rem;
+  border: 2px solid #f7cb10;
+  background: #1a335e;
+  color: #f7cb10;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(20,20,20,0.2), 0 1.5px 0 #fff inset;
+  cursor: pointer;
+  letter-spacing: 2px;
+  transition: background 0.2s, color 0.2s, transform 0.1s, box-shadow 0.2s;
+  outline: none;
+  position: relative;
+  z-index: 2;
+}
 
+.error-button:hover, .error-button:focus {
+  background: #f7cb10;
+  color: #1a335e;
+  box-shadow: 0 6px 24px rgba(247,203,16,0.2), 0 1.5px 0 #1a335e inset;
+  transform: translateY(-2px) scale(1.04);
+}
+
+.error-button--active {
+  border-color: #13a0db;
+  background: #13a0db;
+  color: #fff;
+  box-shadow: 0 0 0 4px rgba(19,160,219,0.15);
+}
 .rightclaw { visibility: hidden; }
 @keyframes errorBackground {
   from{background-color: #ffaaaa;}
