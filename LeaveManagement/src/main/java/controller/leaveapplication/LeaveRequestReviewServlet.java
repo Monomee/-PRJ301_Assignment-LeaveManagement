@@ -4,6 +4,9 @@
  */
 package controller.leaveapplication;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import dal.LeaveRequestDBContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,8 +14,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.ArrayList;
 import model.LeaveRequest;
 import model.User;
 
@@ -72,7 +73,7 @@ public class LeaveRequestReviewServlet extends HttpServlet {
             return;
         }
         User user = (User) session.getAttribute("user");
-        ArrayList<LeaveRequest> leaveRequests = (ArrayList<LeaveRequest>) leaveRequestDB.getLeaveRequestsBySubordinates(user.getUid());
+        ArrayList<LeaveRequest> leaveRequests = new ArrayList<>(leaveRequestDB.getLeaveRequestsBySubordinates(user.getUid()));
         req.setAttribute("leaveRequests", leaveRequests);
         req.getRequestDispatcher("/view/leave_application/review.jsp").forward(req, resp);
     }
